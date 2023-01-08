@@ -32,18 +32,27 @@
                 <th scope="col">Email</th>
                 <th scope="col">Site web</th>
                 <th scope="col">Date de création</th>
+                <th scope="col">Edition</th>
+                <th scope="col">Suppression</th>
+               
               </tr>
             </thead>
             <tbody>
                 {% for lieu in lieux %}
             <tr>
                 <th scope="row">{{lieu.id}}</th>
-                <td>{{lieu.nomLieu}}</td> 
+                <td>{{lieu.nomLieu}}</td>
                 <td>{{lieu.typeLieu}}</td> 
                 <td>{{lieu.numeroTelLieu}}</td> 
                 <td>{{lieu.emailLieu}}</td> 
                 <td>{{lieu.urlLieu}}</td> 
                 <td>{{lieu.createdAt|date("d/m/Y")}}</td> 
+                <td>
+                    <a href="{{ path('lieu.edit', { id : lieu.id }) }}" class="btn btn-info">Modifier</a>
+                </td>
+                <td>
+                    <a href="{{ path('lieu.delete', {id : lieu.id }) }}" class="btn btn-warning">Supprimer</a>
+                </td>
             </tr>
                 {% endfor %}
             </tbody>

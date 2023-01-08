@@ -103,16 +103,9 @@ class LieuController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-    #[Route('/lieu/suppression/{id}', 'lieu.delete', methods : ['POST'])]
+    #[Route('/lieu/suppression/{id}', 'lieu.delete', methods : ['GET'])]
     public function delete(EntityManagerInterface $manager, Lieu $lieu) : Response 
     {
-        if(!$lieu) {
-            $this->addFlash(
-                'succes',
-                'Le lieu en question n\'a pas été trouvé !'
-            );
-            return $this->redirectToRoute('app_lieu');
-        }
         $manager->remove($lieu);
         $manager->flush();
 
@@ -120,7 +113,6 @@ class LieuController extends AbstractController
             'succes',
             'Votre lieu a été supprimé avec succès !'
         );
-
         return $this->redirectToRoute('app_lieu');
 
     }
