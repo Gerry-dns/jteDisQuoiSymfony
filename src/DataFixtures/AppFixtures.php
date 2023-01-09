@@ -34,8 +34,8 @@ class AppFixtures extends Fixture
             $lieu->setEmailLieu($this->faker->email());
             $lieu->setUrlLieu($this->faker->domainName());
 
+            $manager->persist($lieu);
         }
-        $manager->persist($lieu);
     
 
         for ($i=0; $i < 20; $i++) { 
@@ -43,8 +43,8 @@ class AppFixtures extends Fixture
             $adresse->setNumRue($this->faker->numberBetween(0, 400));
             $adresse->setNomRue($this->faker->word());
 
+            $manager->persist($adresse);
         }
-        $manager->persist($adresse);
     
         // creating 10 users
         for ($i=0; $i < 10; $i++) { 
