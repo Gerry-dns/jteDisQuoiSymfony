@@ -5,11 +5,23 @@
 {% block body %}
     <div class="container">
         <h1 class="mt-5">Formulaire de connexion</h1>
+        {# display to user when registration is granted #}
+          {% for message in app.flashes('success') %}
+          <div class="alert alert-success mt-5">
+              {{ message }}
+          </div>
+          {% endfor %}
+        {# display error message, user not found #}
+          {% if error %}
+            <div class="alert alert-dismissible alert-danger" role="alert">
+              {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+          {% endif %}
 
         <form action="{{ path('security.login') }}"  method="post">
             <div class="mb-3">
               <label for="username" class="form-label">Adresse email</label>
-              <input type="email" class="form-control" id="username" name="_username" placeholder="exemple@jtedisquoi.fr">
+              <input type="email" class="form-control" id="username" name="_username" placeholder="exemple@jtedisquoi.fr" value="{{ last_username }}">
               <div id="emailHelp" class="form-text">Nous ne partagerons jamais votre email</div>
             </div>
             <div class="mb-3">

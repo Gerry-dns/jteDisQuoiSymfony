@@ -36,28 +36,32 @@ class LieuFormType extends AbstractType
             ->add('typeLieu', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'minlength' => '2',
                     'maxlength' => '255'
                 ],
-                'label' => 'Type de lieu :',
+                'required' => false,
+                'label' => 'Type de lieu (Facultatif :',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Length(['max' => 255 ]),
+                    new Assert\Length(['min' => 2, 'max' => 255 ]),
                 ]
 
             ])
             ->add('numeroTelLieu', TelType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'minlength' => '2',
                     'maxlength' => '20'
                 ],
+                'required' => false,
                 'label' => 'Numéro de téléphone :',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Length(['max' => 20 ]),
+                    new Assert\Length(['min' => 2, 'max' => 20 ]),
                 ]
 
             ])
@@ -65,28 +69,32 @@ class LieuFormType extends AbstractType
             ->add('emailLieu', EmailType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'minlength' => '2',
                     'maxlength' => '255'
                 ],
+                'required' => false,
                 'label' => 'Adresse Email :',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Length(['max' => 255 ]),
+                    new Assert\Length(['min' => 2, 'max' => 255 ]),
                 ]
 
             ])
             ->add('urlLieu', UrlType::class, [
                 'attr' => [
                     'class' => 'form-control',
+                    'minlength' => '2',
                     'maxlength' => '255'
                 ],
+                'required' => false,
                 'label' => 'Site web :',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
                 'constraints' => [
-                    new Assert\Length(['max' => 255 ]),
+                    new Assert\Length(['min' => 2, 'max' => 255 ]),
                 ]
 
                 ])

@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Entity\Lieu;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[UniqueEntity('email')]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -16,7 +19,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type : 'integer')]
     private ?int $id = null;
 
     
@@ -48,9 +51,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Lieu::class, orphanRemoval: true)]
+    private Collection $lieux;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->lieux = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,6 +161,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, lieu>
+     */
+    public function getLieux(): Collection
+    {
+        return $this->lieux;
+    }
+
+    public function addLieux(lieu $lieux): self
+    {
+        if (!$this->lieux->contains($lieux)) {
+            $this->lieux->add($lieux);
+            $lieux->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLieux(lieu $lieux): self
+    {
+        if ($this->lieux->removeElement($lieux)) {
+            // set the owning side to null (unless already changed)
+            if ($lieux->getUser() === $this) {
+                $lieux->setUser(null);
+            }
+        }
 
         return $this;
     }

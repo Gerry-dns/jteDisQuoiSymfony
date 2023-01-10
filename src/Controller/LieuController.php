@@ -23,19 +23,19 @@ class LieuController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Route('/lieu', name: 'app_lieu', methods:['GET'])]
+    #[Route('/lieu', name: 'lieu.index', methods:['GET'])]
     // injection de dépendance -> injecter un service dans les paramètres de la fonction du controller
     public function index(LieuRepository $repository, PaginatorInterface $paginator, Request $request): Response
     { 
         $lieux = $paginator->paginate(
-            $repository->findAll(),
+            // display 'lieux' that are assigned to the current user
+            $repository->findBy(['user' => $this->getUser()]),
             $request->query->getInt('page', 1), /*page number*/
             10 /*limit per page*/
         );
 
         return $this->render('pages/lieu/index.html.twig', [
             'lieux' => $lieux,
-            'controller_name' => 'LieuController',
         ]);
     }
     /**
@@ -55,6 +55,8 @@ class LieuController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $lieu = $form->getData();
+            /* when a 'lieu' is created, it will be assigned to the current user */
+            $lieu->setUser($this->getUser());
             /* manager has to add ('persist' and 'flush') the data into the database */
             /* Persist is kind of "commit", flush is a "push" */
             $manager->persist($lieu);

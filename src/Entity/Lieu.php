@@ -15,33 +15,37 @@ class Lieu
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'string', length: 255)]
     #[Assert\Length(min: 2, max: 255)]
     #[Assert\NotBlank()]
     private ?string $nomLieu = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type : 'string', length: 255, nullable: true)]
     #[Assert\Length(max: 255)]
     private ?string $typeLieu = null;
 
-    #[ORM\Column(length: 20, nullable: true)]
+    #[ORM\Column(type : 'string', length: 20, nullable: true)]
     #[Assert\Length(max: 20)]
     private ?string $numeroTelLieu = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type : 'string', length: 255, nullable: true)]
     #[Assert\Length(max: 255)]
     private ?string $emailLieu = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type : 'string', length: 255, nullable: true)]
     #[Assert\Length(max: 255)]
     private ?string $urlLieu = null;
 
     #[ORM\Column]
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'lieux')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     /* Constructor */
 
@@ -122,6 +126,18 @@ class Lieu
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

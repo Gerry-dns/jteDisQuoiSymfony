@@ -9,7 +9,6 @@ use App\Entity\User;
 use Faker\Generator;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
@@ -27,25 +26,8 @@ class AppFixtures extends Fixture
     }
     public function load(ObjectManager $manager): void
     {
-        for ($i=0; $i < 50 ; $i++) { 
-            $lieu = new Lieu();
-            $lieu->setNomLieu($this->faker->word());
-            $lieu->setNumeroTelLieu($this->faker->randomNumber(5, true));
-            $lieu->setEmailLieu($this->faker->email());
-            $lieu->setUrlLieu($this->faker->domainName());
-
-            $manager->persist($lieu);
-        }
-    
-
-        for ($i=0; $i < 20; $i++) { 
-            $adresse = new Adresse;
-            $adresse->setNumRue($this->faker->numberBetween(0, 400));
-            $adresse->setNomRue($this->faker->word());
-
-            $manager->persist($adresse);
-        }
-    
+        // creating users varialbe into an empty array
+        $users = [];
         // creating 10 users
         for ($i=0; $i < 10; $i++) { 
             $user = new User();
@@ -56,10 +38,24 @@ class AppFixtures extends Fixture
                 ->setEmail($this->faker->email())
                 ->setRoles(['ROLE_USER'])
                 ->setPassword('password');
-
+            $users[] = $user;
             $manager->persist($user);
         }
+        // creating users varialbe into an empty array
+        $lieux = [];
+        for ($i=0; $i < 50 ; $i++) { 
+            $lieu = new Lieu();
+            $lieu->setNomLieu($this->faker->word());
+            $lieu->setNumeroTelLieu($this->faker->randomNumber(5, true));
+            $lieu->setEmailLieu($this->faker->email());
+            $lieu->setUrlLieu($this->faker->domainName());
+            // a user will be assigned to a random user
+            $lieu->setUser($users[mt_rand(0, count($users) -1)]);
 
+            $lieux[] = $lieu;
+            $manager->persist($lieu);
+        }
+      
         $manager->flush();
     }
 }
