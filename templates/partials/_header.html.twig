@@ -20,9 +20,9 @@
               {{ app.user.fullName }}
             </a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">">Modifier mes informations</a>
-                <a class="dropdown-item" href="#">">Modifier mon mot de passe</a>
-                <a class="dropdown-item" href="#">">Déconnexion</a>
+                <a class="dropdown-item" href="#">Modifier mes informations</a>
+                <a class="dropdown-item" href="#">Modifier mon mot de passe</a>
+                <a class="dropdown-item" href="{{ path('security.logout')}}">Déconnexion</a>
               </div>
           </li>
           {% else %}
