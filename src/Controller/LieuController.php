@@ -8,10 +8,12 @@ use App\Repository\LieuRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class LieuController extends AbstractController
 {
@@ -24,6 +26,8 @@ class LieuController extends AbstractController
      * @return Response
      */
     #[Route('/lieu', name: 'lieu.index', methods:['GET'])]
+    // only USERS can access to /lieu
+    #[IsGranted('ROLE_USER')]
     // injection de dépendance -> injecter un service dans les paramètres de la fonction du controller
     public function index(LieuRepository $repository, PaginatorInterface $paginator, Request $request): Response
     { 
@@ -45,8 +49,10 @@ class LieuController extends AbstractController
      * @param EntityManagerInterface $manager
      * @return Response
      */
+   
     /* We create a Route we write it in French and the methods are GET and POST (POST to create)*/
     #[Route('/lieu/nouveau', 'lieu.new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
     /* we call the EntityManagerInterface, it will help to get into the database */
     public function new(Request $request, EntityManagerInterface $manager) : Response {
         $lieu = new Lieu();
@@ -78,6 +84,8 @@ class LieuController extends AbstractController
     }
    
     /* CRUD UPDATE */
+     // is granted only USER and current user is the same as the one who want create a new lieu
+    #[Security("is_granted('ROLE_USER') and user === lieu.getUser()")]
     #[Route('/lieu/edition/{id}', 'lieu.edit', methods: ['GET', 'POST'])]
     public function edit(
         Lieu $lieu, 
