@@ -6,7 +6,7 @@
     <div class="container mt-5">
         {# if "Lieux" is not empty, normal display #}
         {% if not lieux.getTotalItemCount is same as ([]) %} 
-        <h1>Les lieux</h1>
+        <h1> Mes lieux</h1>
 
         {# Button to add a new place  #}
         <a href="{{ path('lieu.new')}}" class="btn btn-primary">Ajouter un nouveau lieu</a>

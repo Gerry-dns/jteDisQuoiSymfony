@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jte dis quoi - Les lieux{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        {# if "Lieux" is not empty, normal display #}
+        {% if not lieux.getTotalItemCount is same as ([]) %} 
+        <h1> Les lieux</h1>
+
+        <div class="count mt-4">Il y a 
+            {{ lieux.getTotalItemCount}} lieux enregistrés ! 
+        </div>
+
+        <table class="table mt-5">
+            <thead>
+              <tr>
+                <th scope="col">Identifiant</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Type</th>
+                <th scope="col">Numéro de téléphone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Site web</th>
+                <th scope="col">Date de création</th>
+                <th scope="col">Edition</th>
+                <th scope="col">Suppression</th>
+               
+              </tr>
+            </thead>
+            <tbody>
+                {% for lieu in lieux %}
+            <tr>
+                <th scope="row">{{lieu.id}}</th>
+                <td>{{lieu.nomLieu}}</td>
+                <td>{{lieu.typeLieu}}</td> 
+                <td>{{lieu.numeroTelLieu}}</td> 
+                <td>{{lieu.emailLieu}}</td> 
+                <td>{{lieu.urlLieu}}</td> 
+                <td>{{lieu.createdAt|date("d/m/Y")}}</td> 
+            </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {# display navigation #}
+        <div class="navigation d-flex justify-content-end">
+            {{ knp_pagination_render(lieux)}}
+        </div>
+        {# else, it displays "There isn't any places saved" #}
+        {% else %}
+            <h4>Il n'y a pas de lieux enregistrés</h4>
+        {% endif %}
+    </div>
+{% endblock %}

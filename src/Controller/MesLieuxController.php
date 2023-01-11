@@ -15,33 +15,33 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-class LieuController extends AbstractController
+class MesLieuxController extends AbstractController
 {
     /**
-     * This function diplays all 'Lieux'
+     * This function diplays 'Lieux' the current user uploaded
      *
      * @param LieuRepository $repository
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
      */
-    #[Route('/lieu', name: 'lieu.index', methods:['GET'])]
-    // only USERS can access to /lieu
+    #[Route('/mesLieux', name: 'mesLieux.index', methods:['GET'])]
     #[IsGranted('ROLE_USER')]
-    // injection de dépendance -> injecter un service dans les paramètres de la fonction du controller
-    public function index(LieuRepository $repository, PaginatorInterface $paginator, Request $request): Response
-    { 
-        $lieux = $paginator->paginate(
-            // display 'lieux' that are assigned to the current user
-            $repository->findBy(['user' => $this->getUser()]),
-            $request->query->getInt('page', 1), /*page number*/
-            10 /*limit per page*/
-        );
-
-        return $this->render('pages/lieu/index.html.twig', [
-            'lieux' => $lieux,
-        ]);
-    }
+     // injection de dépendance -> injecter un service dans les paramètres de la fonction du controller
+     public function findByUser(LieuRepository $repository, PaginatorInterface $paginator, Request $request): Response
+     { 
+         $lieux = $paginator->paginate(
+             // display 'lieux' that are assigned to the current user
+             $repository->findBy(['user' => $this->getUser()]),
+             $request->query->getInt('page', 1), /*page number*/
+             10 /*limit per page*/
+         );
+ 
+         return $this->render('pages/lieu/mesLieux.html.twig', [
+             'lieux' => $lieux,
+         ]);
+     }
+    
     /**
      * FORM for the CRUD CREATE a new place
      *
@@ -75,7 +75,7 @@ class LieuController extends AbstractController
 
             /* To redirect to the page 'lieu' */
 
-            return $this->redirectToRoute('app_lieu');
+            return $this->redirectToRoute('mesLieux.index');
         }
 
         return $this->render('pages/lieu/new.html.twig', [
@@ -103,7 +103,7 @@ class LieuController extends AbstractController
                 'success',
                 'Votre lieu a bien été modifié. Merci pour votre aide !'
             );
-            return $this->redirectToRoute('app_lieu');
+            return $this->redirectToRoute('mesLieux.index');
         }
      
         $form = $this->createForm(LieuFormType::class, $lieu);
@@ -113,6 +113,7 @@ class LieuController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+    // CRUD DELETE
     #[Route('/lieu/suppression/{id}', 'lieu.delete', methods : ['GET'])]
     public function delete(EntityManagerInterface $manager, Lieu $lieu) : Response 
     {
@@ -123,7 +124,7 @@ class LieuController extends AbstractController
             'succes',
             'Votre lieu a été supprimé avec succès !'
         );
-        return $this->redirectToRoute('app_lieu');
+        return $this->redirectToRoute('mesLieux.index');
 
     }
 }
