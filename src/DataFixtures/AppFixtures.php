@@ -52,6 +52,7 @@ class AppFixtures extends Fixture
             $lieu->setUrlLieu($this->faker->domainName());
             // a user will be assigned to a random user
             $lieu->setUser($users[mt_rand(0, count($users) -1)]);
+            $lieu->setDescription($this->faker->sentence(mt_rand(10, 30)));
 
             $lieux[] = $lieu;
             $manager->persist($lieu);

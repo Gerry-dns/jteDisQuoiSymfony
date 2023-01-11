@@ -19,7 +19,7 @@ class LieuxController extends AbstractController
         // display 'lieux' that are assigned to the current user
         $repository->findAll(),
         $request->query->getInt('page', 1), /*page number*/
-        10 /*limit per page*/
+        4 /*limit per page*/
     );
         return $this->render('pages/lieu/lieux.html.twig', [
             'controller_name' => 'LieuxController',

@@ -11,41 +11,27 @@
         <div class="count mt-4">Il y a 
             {{ lieux.getTotalItemCount}} lieux enregistrés ! 
         </div>
-
-        <table class="table mt-5">
-            <thead>
-              <tr>
-                <th scope="col">Identifiant</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Note</th>
-                <th scope="col">Type</th>
-                <th scope="col">Numéro de téléphone</th>
-                <th scope="col">Email</th>
-                <th scope="col">Site web</th>
-                <th scope="col">Date de création</th>
-                <th scope='col'>Voir</th>
-               
-              </tr>
-            </thead>
-            <tbody>
-                {% for lieu in lieux %}
-            <tr>
-                <th scope="row">{{lieu.id}}</th>
-                <td>{{lieu.nomLieu}}</td>
-                <td>{{(lieu.average)}}</td>
-                <td>{{lieu.typeLieu}}</td> 
-                <td>{{lieu.numeroTelLieu}}</td> 
-                <td>{{lieu.emailLieu}}</td> 
-                <td>{{lieu.urlLieu}}</td> 
-                <td>{{lieu.createdAt|date("d/m/Y")}}</td> 
-                <td>{{lieu.id}}</td>
-                <td>
-                    <a href="{{ path('lieux.show', { id : lieu.id }) }}" class="btn btn-info">Voir</a>
-                </td>
-            </tr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-3">
+                        {% for lieu in lieux %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                      <h2 class="card-title">{{lieu.nomLieu}}</h2>
+                      <h3 class="card-subtitle mb-2 text-muted">{{lieu.typeLieu}}</h3>
+                      <p class="card-text">{{lieu.description}}</p>
+                      <a href="{{ path('lieux.show', { id : lieu.id }) }}" class="btn btn-info">Voir</a>
+                    </div>
+                  </div>
                 {% endfor %}
-            </tbody>
-        </table>
+
+                    </div>
+                </div>
+                
+
+            </div>
+                
+           
 
         {# display navigation #}
         <div class="navigation d-flex justify-content-end">
