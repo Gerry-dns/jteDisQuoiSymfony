@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Lieu;
 use App\Repository\LieuRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LieuxController extends AbstractController
 {
-    #[Route('/lieux', name: 'lieux.index')]
+    #[Route('/lieux', name: 'lieux.index', methods:['GET'])]
     public function displayAllLieux(LieuRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {    
         $lieux = $paginator->paginate(
@@ -25,4 +26,14 @@ class LieuxController extends AbstractController
             'lieux' => $lieux,
         ]);
     }
+
+    #[Route('/lieux/{id}', name: 'lieux.show', methods:['GET'])]
+
+    public function show(LieuRepository $repository, Lieu $lieu): Response
+    {    
+        return $this->render('pages/lieu/show.html.twig', [
+            'lieu' => $lieu,
+        ]);
+    }
+
 }

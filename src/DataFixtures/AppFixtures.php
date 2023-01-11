@@ -2,9 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Adresse;
 use Faker\Factory;
 use App\Entity\Lieu;
+use App\Entity\Mark;
 use App\Entity\User;
 use Faker\Generator;
 use Doctrine\Persistence\ObjectManager;
@@ -24,6 +24,7 @@ class AppFixtures extends Fixture
     {
         $this->faker = Factory::create('fr_FR');
     }
+
     public function load(ObjectManager $manager): void
     {
         // creating users varialbe into an empty array
@@ -55,7 +56,24 @@ class AppFixtures extends Fixture
             $lieux[] = $lieu;
             $manager->persist($lieu);
         }
+
+        // Likes
+        // look for all 'lieux'
       
+        foreach ($lieux as $lieu) {
+            // giving bewteen 0 and 4 marks 
+            for ($i=0; $i < mt_rand(0, 4) ; $i++) { 
+                $mark = new Mark();
+                // mark will be bewteen 1 and 5
+                $mark->setMark(mt_rand(1, 5))
+                // by random users
+                    ->setUser($users[mt_rand(0, count($users) -1)])
+                // to lieu
+                    ->setLieu($lieu);
+
+                $manager->persist($mark);
+            }
+        }
         $manager->flush();
     }
 }

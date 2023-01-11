@@ -30,7 +30,6 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    
        /**
      * This controller allows to log out
      *
