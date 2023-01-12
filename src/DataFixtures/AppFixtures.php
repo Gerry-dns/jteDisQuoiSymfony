@@ -29,6 +29,16 @@ class AppFixtures extends Fixture
     {
         // creating users varialbe into an empty array
         $users = [];
+
+        //setting admin
+        $admin = new User();
+        $admin->setFullName('Administrateur')
+            ->setPseudo(null)
+            ->setEmail('admin@jtedisquoi.fr')
+            ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
+            ->setPassword('password');
+        $user[] = $admin;
+        $manager->persist($admin);
         // creating 10 users
         for ($i=0; $i < 10; $i++) { 
             $user = new User();
@@ -44,9 +54,11 @@ class AppFixtures extends Fixture
         }
         // creating users varialbe into an empty array
         $lieux = [];
+        $typeLieu = ['Bar', 'Restaurant', 'Musée', 'Salle de concert', 'Hôtel', 'Jardins', 'Parc', 'Association' ];
         for ($i=0; $i < 50 ; $i++) { 
             $lieu = new Lieu();
             $lieu->setNomLieu($this->faker->word());
+            $lieu->setTypeLieu($typeLieu[mt_rand(0, count($typeLieu) -1)]);
             $lieu->setNumeroTelLieu($this->faker->randomNumber(5, true));
             $lieu->setEmailLieu($this->faker->email());
             $lieu->setUrlLieu($this->faker->domainName());
