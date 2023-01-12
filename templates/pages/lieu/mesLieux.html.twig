@@ -41,7 +41,9 @@
                 {% for lieu in lieux %}
             <tr>
                 <th scope="row">{{lieu.id}}</th>
-                <td>{{lieu.nomLieu}}</td>
+                <td>
+                    <a href="{{ path('lieux.show', { id : lieu.id }) }})">{{lieu.nomLieu}}</a>
+                </td>
                 <td>{{lieu.typeLieu}}</td> 
                 <td>{{lieu.numeroTelLieu}}</td> 
                 <td>{{lieu.emailLieu}}</td> 
