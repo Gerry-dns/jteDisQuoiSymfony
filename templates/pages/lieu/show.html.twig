@@ -25,9 +25,12 @@
             <div class="row">Email : {{lieu.emailLieu}} </div> 
             <div class="row">Url : {{lieu.urlLieu}}</div>
             <div class="row">Ajouter le : {{lieu.createdAt|date("d/m/Y")}}</div>
+            <div class="container mt-4">
+                <img style="max-width: 30%" src="{{ vich_uploader_asset(lieu, 'imageFile')}}" >
+            </div>
             
         {% if app.user %}
-        <div class="mark">
+        <div class="col-3 mark mt-4">
             {{ form(form)}}
         </div>
             

@@ -51,7 +51,7 @@ class MesLieuxController extends AbstractController
      */
    
     /* We create a Route we write it in French and the methods are GET and POST (POST to create)*/
-    #[Route('/lieu/nouveau', 'lieu.new', methods: ['GET'])]
+    #[Route('/lieu/nouveau', 'lieu.new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     /* we call the EntityManagerInterface, it will help to get into the database */
     public function new(Request $request, EntityManagerInterface $manager) : Response {

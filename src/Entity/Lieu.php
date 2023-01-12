@@ -10,10 +10,13 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: LieuRepository::class)]
 /* Not allowed to create a 'Lieu' with the same name*/
 #[UniqueEntity('nomLieu')]
+#[Vich\Uploadable]
 class Lieu
 {
     #[ORM\Id]
@@ -25,7 +28,7 @@ class Lieu
     #[Assert\Length(min: 2, max: 255)]
     #[Assert\NotBlank()]
     private ?string $nomLieu = null;
-
+    
     #[ORM\Column(type : 'string', length: 255, nullable: true)]
     #[Assert\Length(min: 2, max: 255)]
     private ?string $typeLieu = null;
@@ -55,9 +58,15 @@ class Lieu
 
     private ?float $average = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+     // NOTE: This is not a mapped field of entity metadata, just a simple property.
+     #[Vich\UploadableField(mapping: 'jtedisquoi_images', fileNameProperty: 'imageName')]
+     private ?File $imageFile = null;
+ 
+     #[ORM\Column(type: 'string', nullable: true)]
+     private ?string $imageName = null;
     /* Constructor */
 
     public function __construct() {
@@ -218,4 +227,30 @@ class Lieu
         return $this;
     }
 
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
 }
+

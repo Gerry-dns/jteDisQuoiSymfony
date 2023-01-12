@@ -5,13 +5,15 @@ namespace App\Form;
 use App\Entity\Lieu;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class LieuFormType extends AbstractType
 {
@@ -49,6 +51,18 @@ class LieuFormType extends AbstractType
                 ]
 
             ])
+            ->add('description', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlength' => '2',
+                    'maxlength' => '255'
+                ],
+                'required' => false,
+                'constraints' => [
+                    new Assert\Length(['min' => 2, 'max' => 255 ]),
+                    new Assert\NotBlank()
+                ]
+                ])
             ->add('numeroTelLieu', TelType::class, [
                 'attr' => [
                     'class' => 'form-control',
@@ -82,6 +96,7 @@ class LieuFormType extends AbstractType
                 ]
 
             ])
+           
             ->add('urlLieu', UrlType::class, [
                 'attr' => [
                     'class' => 'form-control',
@@ -97,11 +112,18 @@ class LieuFormType extends AbstractType
                     new Assert\Length(['min' => 2, 'max' => 255 ]),
                 ]
 
-                ])
+            ])
+            
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Image du lieu',
+                'label_attr' => [
+                    'class' => 'form-label mt-4'
+                ]
+            ])
 
             ->add('submit', SubmitType::class, [
                 'attr' => [
-                    'class' => 'btn btn-primary mt-3'
+                    'class' => 'btn btn-primary mt-4'
                 ],
                 'label' => 'Valider'
             ]); 
