@@ -7,13 +7,31 @@
 
 {% block body %}
     <div class="container mt-4">
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-5">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% for message in app.flashes('fail') %}
+        <div class="alert alert-danger mt-5">
+            {{ message }}
+        </div>
+        {% endfor %}
+
         <h2>{{lieu.nomLieu}}</h2>
-            
-            <div class="row">Note du lieu : {{(lieu.average)}}/5</div>
+            <div class="row">Note du lieu : {{(lieu.average|number_format(2, '.', ','))}}/5</div>
             <div class="row">{{lieu.typeLieu}}</div>
             <div class="row">Numéro de téléphone : {{lieu.numeroTelLieu}}</div>
             <div class="row">Email : {{lieu.emailLieu}} </div> 
             <div class="row">Url : {{lieu.urlLieu}}</div>
             <div class="row">Ajouter le : {{lieu.createdAt|date("d/m/Y")}}</div>
+            
+        {% if app.user %}
+        <div class="mark">
+            {{ form(form)}}
+        </div>
+            
+        {% endif %}
+      
     </div>
 {% endblock %}

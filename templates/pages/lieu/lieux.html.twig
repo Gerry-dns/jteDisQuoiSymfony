@@ -13,18 +13,18 @@
         </div>
             <div class="container">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-12 d-flex mt-5">
                         {% for lieu in lieux %}
-                <div class="card" style="width: 18rem;">
+                <div class="card m-3 " style="width: 18rem;">
                     <div class="card-body">
-                      <h2 class="card-title">{{lieu.nomLieu}}</h2>
-                      <h3 class="card-subtitle mb-2 text-muted">{{lieu.typeLieu}}</h3>
-                      <p class="card-text">{{lieu.description}}</p>
-                      <a href="{{ path('lieux.show', { id : lieu.id }) }}" class="btn btn-info">Voir</a>
+                            <h2 class="card-title">{{lieu.nomLieu}}</h2>
+                            <h3 class="card-subtitle mb-2 text-muted">{{lieu.typeLieu}}</h3>
+                            <p class="card-text">{{lieu.description}}</p>
+                            <a class="btn btn-info" href="{{ path('lieux.show', { id : lieu.id }) }}">Voir</a>
                     </div>
                   </div>
+                  
                 {% endfor %}
-
                     </div>
                 </div>
                 
