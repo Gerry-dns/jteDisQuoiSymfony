@@ -9,11 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 class ContactController extends AbstractController
 {
     #[Route('/contact', name: 'contact.index')]
-    public function index(EntityManagerInterface $manager, Request $request): Response
+    public function index(EntityManagerInterface $manager, Request $request, MailerInterface $mailer): Response
     {
         $contact = new Contact();
 
@@ -32,6 +34,17 @@ class ContactController extends AbstractController
 
             $manager->persist($contact);
             $manager->flush();
+
+            // Email
+
+            $email = (new Email())
+            ->from($contact->getEmail())
+            ->to('admin@jtedisquoi.com')
+            ->subject($contact->getSubject())
+            ->html($contact->getMessage());
+
+        $mailer->send($email);
+
 
             $this->addFlash(
                 'success',
