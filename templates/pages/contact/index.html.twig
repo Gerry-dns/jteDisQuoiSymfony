@@ -4,12 +4,12 @@
 
 {% block body %}
 <div class="container mt-5">
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success mt-5">
-            {{ message }}
-        </div>
-        {% endfor %}
     <h1>Formulaire de contact</h1>
-    {{  form (form)  }}
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-5">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {{  form (form)  }}
 </div>
 {% endblock %}
