@@ -25,7 +25,6 @@
         <table class="table mt-5">
             <thead>
               <tr>
-                <th scope="col">Identifiant</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Type</th>
                 <th scope="col">Numéro de téléphone</th>
@@ -34,13 +33,11 @@
                 <th scope="col">Date de création</th>
                 <th scope="col">Edition</th>
                 <th scope="col">Suppression</th>
-               
               </tr>
             </thead>
             <tbody>
                 {% for lieu in lieux %}
             <tr>
-                <th scope="row">{{lieu.id}}</th>
                 <td>
                     <a href="{{ path('lieux.show', { id : lieu.id }) }})">{{lieu.nomLieu}}</a>
                 </td>
