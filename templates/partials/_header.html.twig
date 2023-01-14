@@ -1,53 +1,65 @@
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-          <a class="navbar-brand" style="margin-left: 1rem" href="#">Logo</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href=" {{ path('home.index')}}">Accueil</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href=" {{ path('lieux.index')}}">Tous les lieux</a>
-            </li class="nav-item">
-            {% if app.user %}
-            <li class="nav-item">
-              <a class="nav-link" href=" {{ path('mesLieux.index') }}">Mes lieux</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href=" {{ path('lieu.new') }}">Ajouter un lieu</a>
-            </li>
-            {% endif %}
-            <li>
-              <a class="nav-link active" href="{{ path('contact.index')}}">Contact</a>
-            </li>
-          </div>
-  
-    {% if app.user %}
-          <li class="nav-item dropdown d-flex" style="margin-right: 8rem">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="margin-left: 1rem" href="#">Logo</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href=" {{ path('home.index')}}">Accueil
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href=" {{ path('lieux.index')}}">Tous les lieux</a>
+        </li>
+        {% if app.user %}
+        <li class="nav-item">
+          <a class="nav-link" href=" {{ path('mesLieux.index') }}">Mes lieux</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href=" {{ path('lieu.new') }}">Ajouter un lieu</a>
+        </li>
+        {% endif %}
+        <li>
+          <a class="nav-link active" href="{{ path('contact.index')}}">Contact</a>
+        </li>
+      </ul>
+      <div class="d-flex">
+        <ul class="navbar-nav me-auto">
+          {% if app.user %}
+          <li class="nav-item dropdown" style="margin-right: 8rem">
             <a class="nav-link dropdown-toggle me-5" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{ app.user.fullName }}
             </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="">Modifier mes informations</a>
-                <a class="dropdown-item" href="#">Modifier mon mot de passe</a>
-                <div class="dropdown-divider"></div>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{{path('user.edit', {id : app.user.id})}}">Modifier mes informations</a>
+              <a class="dropdown-item" href="{{path('user.edit.password', {id : app.user.id})}}">Modifier mon mot de passe</a>
+              <div class="dropdown-divider"></div>
                 {% if 'ROLE_ADMIN' in app.user.roles %}
                   <a class="dropdown-item" href="{{ path('admin')  }}">Administration</a>
                 {% endif %}
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{ path('security.logout')}}">Déconnexion</a>
-              </div>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{{ path('security.logout')}}">Déconnexion</a>
+            </div>
           </li>
           {% else %}
           <li class="nav-item dropdown d-flex me-5 ">
-            <a class="btn bg" href="{{ path('security.login')}}">
-              Connexion
-            </a> 
+            <a class="btn bg" href="{{ path('security.login')}}">Connexion</a> 
+          </li>
+          <li class="nat-item">
+            <a href="{{ path('security.registration')  }}" class="nav-link">Inscription</a>
           </li>
           {% endif %}
-      </nav>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
     
 
 
