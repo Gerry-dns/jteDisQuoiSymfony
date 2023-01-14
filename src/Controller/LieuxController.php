@@ -12,12 +12,11 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class LieuxController extends AbstractController
 {
-    #[Route('/lieux', name: 'lieux.index', methods:['GET', 'POST'])]
+    #[Route('/lieux', name: 'lieux.index', methods:['GET'])]
     public function displayAllLieux(LieuRepository $repository, PaginatorInterface $paginator, Request $request): Response
     {    
         $lieux = $paginator->paginate(

@@ -46,9 +46,18 @@
         </div>
 
         <div class="form-group">
-            {{ form_row(form.submit)}}
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
         </div>
-
-        {{ form_end(form)  }}
+            <div class="form-error">
+                {{ form_errors(form.description) }}
+            </div>
+            <div class="form-group">
+                {{ form_label(form.imageFile) }}
+            </div>    
+        <div class="form-group">
+            {{ form_row(form.submit)}}
+        </div>     
+            {{ form_end(form)  }}
     </div>
 {% endblock %}

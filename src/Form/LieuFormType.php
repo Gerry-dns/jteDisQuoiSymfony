@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class LieuFormType extends AbstractType
 {
@@ -51,29 +50,19 @@ class LieuFormType extends AbstractType
                 ]
 
             ])
-            ->add('description', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'minlength' => '2',
-                    'maxlength' => '255'
-                ],
-                'required' => false,
-                'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 255 ]),
-                    new Assert\NotBlank()
-                ]
-                ])
+           
             ->add('numeroTelLieu', TelType::class, [
+                
                 'attr' => [
                     'class' => 'form-control',
                     'minlength' => '2',
                     'maxlength' => '20'
                 ],
-                'required' => false,
                 'label' => 'Numéro de téléphone :',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
                 ],
+                'required' => false,
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 20 ]),
                 ]
@@ -113,8 +102,21 @@ class LieuFormType extends AbstractType
                 ]
 
             ])
+            ->add('description', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'minlength' => '2',
+                    'maxlength' => '255'
+                ],
+                'required' => false,
+                'constraints' => [
+                    new Assert\Length(['min' => 2, 'max' => 255 ]),
+                    new Assert\NotBlank()
+                ]
+                ])
             
             ->add('imageFile', VichImageType::class, [
+                'required' => false,
                 'label' => 'Image du lieu',
                 'label_attr' => [
                     'class' => 'form-label mt-4'

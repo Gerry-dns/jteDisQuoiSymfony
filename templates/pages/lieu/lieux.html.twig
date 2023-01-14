@@ -15,26 +15,20 @@
                 <div class="row">
                     <div class="col-12 d-flex mt-5">
                         {% for lieu in lieux %}
-                <div class="card m-3 " style="width: 18rem;">
-                    <div class="card-body">
-                            <h2 class="card-title">{{lieu.nomLieu}}</h2>
-                            <h3 class="card-subtitle mb-2 text-muted">{{lieu.typeLieu}}</h3>
-                            <p class="card-text">{{lieu.description}}</p>
-                            <a class="btn btn-info" href="{{ path('lieux.show', { id : lieu.id }) }}">Voir</a>
-                    </div>
-                  </div>
-                  
-                {% endfor %}
+                        <div class="card m-3 " style="width: 18rem;">
+                            <div class="card-body d-flex justify-content-between flex-column">
+                                <h2 class="card-title">{{lieu.nomLieu}}</h2>
+                                <h3 class="card-subtitle mb-2 text-muted">{{lieu.typeLieu}}</h3>
+                                <p class="card-text">{{lieu.description}}</p>
+                                <a class="btn btn-info" href="{{ path('lieux.show', { id : lieu.id }) }}">Voir</a>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-                
-
             </div>
-                
-           
-
         {# display navigation #}
-        <div class="navigation d-flex justify-content-end">
+        <div class="navigation d-flex justify-content-end mt-3">
             {{ knp_pagination_render(lieux)}}
         </div>
         {# else, it displays "There isn't any places saved" #}

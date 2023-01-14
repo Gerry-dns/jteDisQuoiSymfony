@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Lieu;
 use App\Form\LieuFormType;
 use App\Repository\LieuRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -57,8 +56,9 @@ class MesLieuxController extends AbstractController
     public function new(Request $request, EntityManagerInterface $manager) : Response {
         $lieu = new Lieu();
         $form = $this->createForm(LieuFormType::class, $lieu);
-
+        // get the request
         $form->handleRequest($request);
+        // is form is submitted and valid
         if($form->isSubmitted() && $form->isValid()) {
             $lieu = $form->getData();
             /* when a 'lieu' is created, it will be assigned to the current user */
@@ -91,12 +91,15 @@ class MesLieuxController extends AbstractController
         Lieu $lieu, 
         Request $request, 
         EntityManagerInterface $manager
-    ): Response {
+    ): Response 
+    {
         
         $form = $this->createForm(LieuFormType::class, $lieu);
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()) {
             $lieu = $form->getData();
+
             $manager->persist($lieu);
             $manager->flush();
 
@@ -104,13 +107,13 @@ class MesLieuxController extends AbstractController
                 'success',
                 'Votre lieu a bien été modifié. Merci pour votre aide !'
             );
+
             return $this->redirectToRoute('mesLieux.index');
         }
      
         $form = $this->createForm(LieuFormType::class, $lieu);
 
         return $this->render('pages/lieu/edit.html.twig', [
-
             'form' => $form->createView()
         ]);
     }
