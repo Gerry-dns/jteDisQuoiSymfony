@@ -35,8 +35,7 @@ class LieuxController extends AbstractController
 
     public function show(Lieu $lieu, Request $request, 
     MarkRepository $markRepository, 
-    EntityManagerInterface $manager) 
-    : Response
+    EntityManagerInterface $manager) : Response
     {   
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
