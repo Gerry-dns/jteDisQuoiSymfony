@@ -18,23 +18,43 @@
         </div>
         {% endfor %}
 
-        <h2>{{lieu.nomLieu}}</h2>
-            <div class="row">Note du lieu : {{(lieu.average|number_format(2, '.', ','))}}/5</div>
-            <div class="row">{{lieu.typeLieu}}</div>
-            <div class="row">Numéro de téléphone : {{lieu.numeroTelLieu}}</div>
-            <div class="row">Email : {{lieu.emailLieu}} </div> 
-            <div class="row">Url : {{lieu.urlLieu}}</div>
-            <div class="row">Ajouter le : {{lieu.createdAt|date("d/m/Y")}}</div>
-            <div class="lieu_image">
-                <img style="max-width: 30%" src="{{ vich_uploader_asset(lieu, 'imageFile')}}" >
+        <h1>{{lieu.nomLieu}}</h1>
+            <div class="row">
+                <div class="col-6">
+                    <div class="lieu_image mt-4">
+                        <img style="max-width: 100%" src="{{ vich_uploader_asset(lieu, 'imageFile')}}" >
+                    </div>
+                </div>
+                <div class="col-3 mt-5">
+                    <p>Note : {{(lieu.average|number_format(2, '.', ','))}}/5</p>
+                    <p>Type de lieu : {{lieu.typeLieu}}</p>
+                    <p>Numéro de téléphone : {{lieu.numeroTelLieu}}</p>
+                    <p>Email : {{lieu.emailLieu}}</p>
+                    <p>Site web : <a href="">{{lieu.urlLieu}}</a></p>
+                    <p>Ajouté le :  {{lieu.createdAt|date("d/m/Y")}}</p>
+                </div>
+                <div class="col-3 mt-5">
+                    {% if app.user %}
+                    <p>Vous avez aimé ce lieu ? Notez le !</p>
+                    <div class="col-12 mt-4">
+                        {{ form(form)}}
+                    </div>
+                    {% endif %}
+                </div>
             </div>
+            <div class="row">
+                <div class="col-12 mt-4">
+                    <h2>Description :</h2>
+                    <p>{{lieu.description}}</p>
+                </div>
+            </div>
+          
+                   
+                
+                 
             
-        {% if app.user %}
-        <div class="col-3 mark mt-4">
-            {{ form(form)}}
-        </div>
             
-        {% endif %}
+        
       
     </div>
 {% endblock %}
