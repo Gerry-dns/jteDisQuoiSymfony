@@ -45,9 +45,10 @@ class Lieu
     #[Assert\Length(min: 2, max: 255)]
     private ?string $urlLieu = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'datetime_immutable')]
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'lieux')]
     #[ORM\JoinColumn(nullable: false)]
