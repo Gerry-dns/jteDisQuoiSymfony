@@ -9,8 +9,6 @@ use App\Entity\User;
 use Faker\Generator;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
@@ -55,7 +53,8 @@ class AppFixtures extends Fixture
         }
         // creating users varialbe into an empty array
         $lieux = [];
-        $typeLieu = ['Bar', 'Restaurant', 'Musée', 'Salle de concert', 'Hôtel', 'Jardins', 'Parc', 'Association' ];
+        $typeLieu = ['Bar', 'Restaurant', 'Musée', 'Salle de concert', 'Hôtel', 
+        'Jardins', 'Parc', 'Association' ];
         for ($i=0; $i < 50 ; $i++) { 
             $lieu = new Lieu();
             $lieu->setNomLieu($this->faker->word());
