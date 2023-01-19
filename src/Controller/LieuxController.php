@@ -36,7 +36,8 @@ class LieuxController extends AbstractController
     public function show(Lieu $lieu, Request $request, 
     MarkRepository $markRepository, 
     EntityManagerInterface $manager) : Response
-    {   
+    {
+     
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
 
@@ -74,7 +75,7 @@ class LieuxController extends AbstractController
         }
         return $this->render('pages/lieu/show.html.twig', [
             'lieu' => $lieu,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 }

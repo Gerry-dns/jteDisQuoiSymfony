@@ -9,6 +9,9 @@ use App\Entity\User;
 use Faker\Generator;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\Validator\Constraints\Length;
+
+use function PHPSTORM_META\map;
 
 class AppFixtures extends Fixture
 {
@@ -55,11 +58,22 @@ class AppFixtures extends Fixture
         $lieux = [];
         $typeLieu = ['Bar', 'Restaurant', 'Musée', 'Salle de concert', 'Hôtel', 
         'Jardins', 'Parc', 'Association' ];
+        $nomLieu = ['Le Palais Clair', 'Le Château de la Plage', 'La Fable de Bronze', 'Le Mélange du Quai',
+        'La Légende', 'Le Colibri','Le Mur','Séduction','la Niche','Lueur des Étoiles',
+        "Le Nuage d'Orange","La Table Chaude","Le Lieu de Sarriette","Le Nuage Privé",
+        "Le Balcon de Cuisson","Le GastroGnome", "Le Calme", "Le Saphir", "L'Amusement", "Le Lis",
+        "La Capture Rose", "La Cabane Italienne", "La Vallée Ovale", "Le Morceau du Canal",
+        "Le Hall Solaire", "Le Dépôt", "Élémentaire", "La Tulipe", "La Gemme", "L'Échange de Cannelle",
+        "Le Balcon de la Plage", "Le Pétale Violet", "L'Usine Argentée", "Le Boulevard Lunaire",
+        "La Perle rare", "Bambino", "L'Île", "Lueur des Songes", "La Caverne", "Le Lis de Paume",
+        "La Saveur Thaïlandaise","Le Piment Doré","Le Moulin d'Hiver","Le Sanglier Silencieux",
+        "La Chance","Le Coquin","le Marmonnement","Piccolo", "Révélations", 'Chez Anouk'];
+
         for ($i=0; $i < 50 ; $i++) { 
             $lieu = new Lieu();
-            $lieu->setNomLieu($this->faker->word());
             $lieu->setTypeLieu($typeLieu[mt_rand(0, count($typeLieu) -1)]);
-            $lieu->setNumeroTelLieu($this->faker->randomNumber(5, true));
+            $lieu->setNumeroTelLieu($this->faker->randomNumber(9, true));
+            $lieu->setNomLieu($nomLieu[$i]);
             $lieu->setEmailLieu($this->faker->email());
             $lieu->setUrlLieu($this->faker->domainName());
             // a user will be assigned to a random user

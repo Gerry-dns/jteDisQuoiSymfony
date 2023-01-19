@@ -68,7 +68,8 @@ class Lieu
  
      #[ORM\Column(type: 'string', nullable: true)]
      private ?string $imageName = null;
-    /* Constructor */
+
+   
 
     public function __construct() {
         $this->createdAt = new DateTimeImmutable();
@@ -253,5 +254,7 @@ class Lieu
     {
         return $this->imageName;
     }
+
+
 }
 
