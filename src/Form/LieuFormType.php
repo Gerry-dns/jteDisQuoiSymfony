@@ -4,14 +4,15 @@ namespace App\Form;
 
 use App\Entity\Lieu;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class LieuFormType extends AbstractType
@@ -34,21 +35,24 @@ class LieuFormType extends AbstractType
                     new Assert\NotBlank()
                 ]
             ])
-            ->add('typeLieu', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'minlength' => '2',
-                    'maxlength' => '255'
+            ->add('typeLieu', ChoiceType::class, [
+                'choices' => [
+                    'Bar' => 'Bar',
+                    'Restaurant' => 'Restaurant',
+                    'Association' => 'Association',
+                    'Parc' => 'Parc',
+                    'Musée' => 'Musée',
+                    'Salle de concert' => 'Salle de concert',
+                    'Hôtel' => 'Hôtel'
                 ],
-                'required' => false,
-                'label' => 'Type de lieu (Facultatif :',
+                'attr' => [
+                    'class' => 'form-select'
+                ],
+                
+                'label' => 'Type de lieu',
                 'label_attr' => [
                     'class' => 'form-label mt-4'
-                ],
-                'constraints' => [
-                    new Assert\Length(['min' => 2, 'max' => 255 ]),
                 ]
-
             ])
            
             ->add('numeroTelLieu', TelType::class, [
@@ -111,7 +115,7 @@ class LieuFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Assert\Length(['min' => 2, 'max' => 255 ]),
-                    new Assert\NotBlank()
+                 
                 ]
                 ])
             

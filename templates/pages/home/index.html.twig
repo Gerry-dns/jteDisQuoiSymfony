@@ -14,29 +14,48 @@
           <a class="btn btn-primary btn-lg" href="{{ path('security.registration') }}" role="button">Inscription</a>
         </p>
       </div>
-      <div class="row">
+      <div class="row ms-5 mt-5">
         <div class="col-6">
-          <div id='map' style='width: 400px; height: 300px;'></div>
+          <div id='map' style='width: 400px; height: 300px;'>
+            <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoiZ2VycnkzMzkwIiwiYSI6ImNsY3c5ZWZweDFjZnUzb214dDIwNG13MTQifQ.w2EVN-uw6IYUxFQGz1AFVg';
+            var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11',
+            zoom: 11,
+            center: [3.060937, 50.631471], //lng, lat
+            // http://bboxfinder.com to get exact lng and lat
+            projection: 'globe'
+            });
+            </script>
+          </div>
         </div>
+
         <div class="col-6">
-        
-        </div>
+          <p>La communauté a déjà ajouté {{ lieux.getTotalItemCount}} lieux enregistrés ! </p>
+          <p>Envie de partager un endroit ? </p>
+          <a class="btn btn-primary" href=" {{ path('lieu.new') }}" > Clique ici ! </a>
       </div>
-      <script>
-        mapboxgl.accessToken = 'pk.eyJ1IjoiZ2VycnkzMzkwIiwiYSI6ImNsY3c5ZWZweDFjZnUzb214dDIwNG13MTQifQ.w2EVN-uw6IYUxFQGz1AFVg';
-        var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11',
-        zoom: 11,
-        center: [3.060937, 50.631471], //lng, lat
-        // http://bboxfinder.com to get exact lng and lat
-        projection: 'globe'
-        });
-      </script>
+          
       
+      
+      <div class="mt-4">
+      </div>
+    <div class="container">
+      <div class="row">
+          <div class="col-12 d-flex mt-5">
+              {% for lieu in lieux %}
+              <div class="card m-3 " style="width: 18rem;">
+                  <div class="card-body d-flex justify-content-between flex-column">
+                      <h2 class="card-title">{{lieu.nomLieu}}</h2>
+                      <h3 class="card-subtitle mb-2 text-muted">{{lieu.typeLieu}}</h3>
+                      <p class="card-text">{{lieu.description}}</p>
+                      <a class="btn btn-info" href="{{ path('lieux.show', { id : lieu.id }) }}">Voir</a>
+                  </div>
+              </div>
+              {% endfor %}
+          </div>
+      </div>
+  </div>
 </div>
-
-
-
-
 {% endblock %}

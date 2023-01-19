@@ -22,13 +22,8 @@
         <div class="row">
             <div class="col-6">
                 <div class="lieu_image mt-4 d-flex justify-content-center align-items-center">
-                    {% if lieu.imageFile %}
-                    <img style="max-width: 100%" src= "{{ vich_uploader_asset(lieu, 'imageFile')}}" >
+                    <img style="max-width: 100%" src= "{{ vich_uploader_asset(lieu, 'imageFile')}}">
                     
-                    {% else %}
-                    <img src="{{asset('defaultImage/defaultImage.jpg')}}" alt="">
-                    {% endif %}
-                  
                 </div>
             </div>
                 <div class="col-3 mt-5">
