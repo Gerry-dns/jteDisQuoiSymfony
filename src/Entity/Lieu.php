@@ -69,11 +69,15 @@ class Lieu
      #[ORM\Column(type: 'string', nullable: true)]
      private ?string $imageName = null;
 
+     #[ORM\OneToMany(mappedBy: 'lieux', targetEntity: Commentaire::class, orphanRemoval: true)]
+     private Collection $commentaires;
+
    
 
     public function __construct() {
         $this->createdAt = new DateTimeImmutable();
         $this->marks = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -253,6 +257,41 @@ class Lieu
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setLieux($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getLieux() === $this) {
+                $commentaire->setLieux(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->content;
     }
 
 

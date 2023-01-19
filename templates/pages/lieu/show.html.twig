@@ -27,28 +27,46 @@
                 </div>
                 <div class="col-3 mt-5">
                     <p>Note : {{(lieu.average|number_format(2, '.', ','))}}/5</p>
+                    <p>Nombre de commentaires : {{lieu.commentaires|length}} </p>
                     <p>Type de lieu : {{lieu.typeLieu}}</p>
                     <p>Numéro de téléphone : {{lieu.numeroTelLieu}}</p>
                     <p>Email : {{lieu.emailLieu}}</p>
                     <p>Site web : <a href="">{{lieu.urlLieu}}</a></p>
                     <p>Ajouté le :  {{lieu.createdAt|date("d/m/Y")}}</p>
                 </div>
-                <div class="col-3 mt-5">
-                    {% if app.user %}
-                    <p>Vous avez aimé ce lieu ? Notez le !</p>
-                    <div class="col-12 mt-4">
-                        {{ form(form)}}
+                    <div class="col-3 mt-5">
+                        {% if app.user %}
+                        <p>Vous avez aimé ce lieu ? Notez le !</p>
+                        <div class="col-12 mt-4">
+                            {{ form(form)}}
+                        </div>
+                        <p class="mt-5">Envie de laisser un commentaire ?</p>
+                        {{ form(commentForm)}}
+                        
+                        {% endif %}
                     </div>
-                    <div class="col-12 mt-4">
-                        {{ form(form)}}
-                    </div>
-                    {% endif %}
-                </div>
             </div>
             <div class="row">
                 <div class="col-12 mt-4">
                     <h2>Description :</h2>
                     <p>{{lieu.description}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 mt-4">
+                    <ul class="comment-list m-">
+                        {% for commentaire in commentaires %}
+                        <li>
+                            <div class="">
+                                <h4> {{commentaire.user.fullName}}</h4>
+                                <p>
+                                    {{commentaire.content}}
+                                </p>
+                                <small>Le {{commentaire.createdAt|date("d/m/Y")}} à {{commentaire.createdAt|format_datetime('none', 'short', locale='fr')}}</small>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
     </div>

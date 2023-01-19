@@ -5,6 +5,9 @@ namespace App\Controller;
 use App\Entity\Lieu;
 use App\Entity\Mark;
 use App\Form\MarkType;
+use App\Form\CommentType;
+use App\Entity\Commentaire;
+use App\Repository\CommentaireRepository;
 use App\Repository\LieuRepository;
 use App\Repository\MarkRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,10 +37,22 @@ class LieuxController extends AbstractController
     #[Route('/lieux/{id}', name: 'lieux.show', methods:['GET', 'POST'])]
 
     public function show(Lieu $lieu, Request $request, 
-    MarkRepository $markRepository, 
-    EntityManagerInterface $manager) : Response
+    MarkRepository $markRepository,     // to display te comment into the view
+    EntityManagerInterface $manager, CommentaireRepository $commentaireRepository) : Response
     {
-     
+        $comment = new Commentaire($lieu);
+        $commentForm = $this->createForm(CommentType::class, $comment);
+        $commentForm->handleRequest($request);
+
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $comment->setUser($this->getUser())
+                    ->setLieux($lieu);
+
+            $manager->persist($comment);
+            $manager->flush();
+            $this->addflash('success', 'Votre commentaire a bien été posté. Merci !');
+        }
+
         $mark = new Mark();
         $form = $this->createForm(MarkType::class, $mark);
 
@@ -76,6 +91,10 @@ class LieuxController extends AbstractController
         return $this->render('pages/lieu/show.html.twig', [
             'lieu' => $lieu,
             'form' => $form->createView(),
+            'commentForm' => $commentForm->createView(),
+            'commentaires' => $commentaireRepository->findBy(['lieux' => $lieu])
+
         ]);
+
     }
 }
